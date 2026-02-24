@@ -3,15 +3,15 @@
 A lightweight JavaScript/TypeScript client to integrate with Agent NeXuS web utilities and APIs.
 
 ## Install
-Copy the `src/index.ts` into your project or add this folder as a submodule.
+Copy `src/index.ts` into your project or add this folder as a submodule.
 
 ## 1. Clone and Setup
-Clone repo SDK mandiri (AgentNXS‑ai) atau gunakan folder ini sebagai submodule.
+Clone the standalone SDK repo (AgentNXS‑ai) or use this folder as a submodule.
 ```
 git clone git@github.com:AgentNeXuSgit/AgentNXS-ai.git
 cd AgentNXS-ai
 ```
-Opsional (TypeScript lokal):
+Optional (local TypeScript):
 ```
 npm init -y
 npm i -D typescript
@@ -19,19 +19,19 @@ npx tsc --init
 ```
 
 ## 2. Configure
-Tetapkan konfigurasi koneksi dan header autentikasi sesuai deployment Anda.
-- baseUrl: URL deployment web Agent NeXuS (mis. https://your-app.example.com)
+Set connection config and authentication headers for your deployment.
+- baseUrl: your Agent NeXuS web deployment URL (e.g. https://your-app.example.com)
 - headers:
-  - authorization: Bearer <AGENTNEXUS_API_KEY> (opsional, jika backend mendukung)
-  - x-user-id: ID user (untuk rute owner/reviewer)
-  - x-role: ADMIN | REVIEWER | USER (sesuai kebutuhan rute)
+  - authorization: Bearer <AGENTNEXUS_API_KEY> (optional, if your backend supports it)
+  - x-user-id: user ID (for owner/reviewer routes)
+  - x-role: ADMIN | REVIEWER | USER (as required by the route)
 
-Contoh inisialisasi:
+Initialization example:
 ```ts
 import { AgentNexusClient } from "./agentnexus-js/src/index";
 
 const client = new AgentNexusClient({
-  baseUrl: process.env.AGENTNEXUS_BASE_URL, // kosongkan untuk same-origin
+  baseUrl: process.env.AGENTNEXUS_BASE_URL, // leave empty for same-origin
   headers: {
     authorization: `Bearer ${process.env.AGENTNEXUS_API_KEY || ""}`,
     "x-user-id": process.env.AGENTNEXUS_USER_ID || "",
@@ -41,24 +41,24 @@ const client = new AgentNexusClient({
 ```
 
 ## 3. Generate NeXuS API Key
-Saat ini demo backend menggunakan header `x-user-id` dan `x-role`. Jika deployment Anda memiliki sistem API key:
-- Buat API key di Dashboard/Admin Anda
-- Simpan sebagai AGENTNEXUS_API_KEY di environment (jangan commit ke repo)
-- Kirim sebagai `Authorization: Bearer <key>` di setiap request
+The demo backend uses `x-user-id` and `x-role`. If your deployment has an API key system:
+- Create an API key in your Dashboard/Admin
+- Store it as AGENTNEXUS_API_KEY in environment (never commit)
+- Send it as `Authorization: Bearer <key>` with each request
 
-Jika belum ada sistem API key, gunakan `x-user-id` + `x-role` seperti contoh di atas sampai backend siap.
+If you don’t have API keys yet, use `x-user-id` + `x-role` as shown until the backend is ready.
 
 ## 4. Run Agent
-Contoh alur integrasi:
+Example integration flow:
 ```ts
 import { AgentNexusClient } from "./agentnexus-js/src/index";
 
 const client = new AgentNexusClient({
-  baseUrl: "https://your-deployment.example.com", // kosongkan untuk same-origin
+  baseUrl: "https://your-deployment.example.com", // leave empty for same-origin
   headers: {
     authorization: `Bearer ${process.env.AGENTNEXUS_API_KEY || ""}`,
     "x-user-id": "USER_ID",
-    "x-role": "ADMIN", // atau REVIEWER / USER sesuai rute
+    "x-role": "ADMIN", // or REVIEWER / USER depending on the route
   },
 });
 
@@ -90,4 +90,4 @@ await client.reviewDecision({ agentId: "agent-id", decision: "APPROVE", notes: "
 ## Notes
 - Some routes require auth headers: `x-user-id`, `x-role`
 - Replace mock console streaming with SSE/WebSocket in your backend
-- Do not commit secrets; use environment variables or header injection per request
+- Do not commit secrets; use environment variables or per-request header injection
