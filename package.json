@@ -1,0 +1,17 @@
+{
+  "name": "agentnexus-js",
+  "version": "0.1.0",
+  "description": "Lightweight JS/TS client for Agent NeXuS web APIs",
+  "type": "module",
+  "private": true,
+  "main": "src/index.ts",
+  "files": [
+    "src"
+  ],
+  "keywords": [
+    "agentnexus",
+    "sdk",
+    "marketplace",
+    "nextjs"
+  ]
+}
